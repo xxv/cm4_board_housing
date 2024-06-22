@@ -13,9 +13,6 @@ m2_standoff_wall = 1;
 m3_heatset_depth = 4.5;
 m3_heatset_dia = 4;
 
-m4_heatset_depth = 5.5;
-m4_heatset_dia = 5.6;
-
 housing_screw_head_dia = 6.2; // m3
 housing_screw_hole_dia = 3.3; // m3
 housing_screw_inset = 6;
@@ -41,15 +38,13 @@ cm4_rotation = 0;
 cm4_position = [11, 0];
 cm4_bounds = [110, 110, 20];
 cm4_standoff_depth = standoff_height;
-cm4_standoff_dia = 1.5;
+cm4_standoff_dia = m3_heatset_dia;
 cm4_standoff_wall = 1.7;
 
 
 exterior = interior + [housing_wall * 2, housing_wall * 2, baseplate_thickness];
 
 smidge = 0.01;
-
-function in_to_mm(in) = 25.4 * in;
 
 module housing_top() {
   difference() {
@@ -75,6 +70,7 @@ module housing_top() {
     rotate([90, 0, 90])
       cylinder(d=10, h=20);
 
+    // Enable this if you want vent holes
     *for (y=[0, interior.y + housing_wall])
       translate([housing_screw_body_dia/2, y + housing_wall + smidge, housing_wall])
         rotate([90, 0, 0])
@@ -181,29 +177,6 @@ module housing_bottom() {
   }
 }
 
-module mounting_bracket() {
-  size = [in_to_mm(4.0), 16, m4_heatset_depth];
-  hole_spacing = in_to_mm(3.5);
-  hole_dia = 5;
-
-  translate(-size/2)
-      difference() {
-        rounded_cube(size, size.y/2 - smidge);
-
-        translate([size.x/2, size.y/2, -smidge])
-          rotate(0) {
-            for (x=[-1, 1])
-              translate([x * hole_spacing/2, 0]) {
-                cylinder(d=hole_dia, h=size.z + smidge * 2);
-                translate([0, 0, size.z/2])
-                  cylinder(d1=hole_dia, d2=hole_dia * 2, h=size.z/2 + smidge * 2);
-              }
-
-          cylinder(d=m4_heatset_dia, h=size.z + smidge * 2);
-        }
-      }
-}
-
 // size is [x, y, depth] laid out on the x/y plane
 module vent_holes(size) {
   hole_size = 3;
@@ -238,10 +211,4 @@ module standoff(depth, id, wall=2) {
       circle(d=id + wall * 2);
       circle(d=id);
     }
-}
-
-module m4_socket_screw(length) {
-  cylinder(d=7, h=4);
-  translate([0, 0, -length])
-    cylinder(d=4, h=length);
 }

@@ -8,7 +8,7 @@ module mockup() {
 
   translate([cm4_position.x, cm4_position.y, 0] + [2, 2, baseplate_thickness + cm4_standoff_depth])
   cm4_board();
-    *housing_bottom();
+    housing_bottom();
     color("red")
       translate([0, 0, baseplate_thickness])
         housing_top();
