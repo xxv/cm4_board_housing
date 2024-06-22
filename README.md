@@ -6,7 +6,7 @@ A 3D printable housing for the [Cytron CM4 Maker Board][makerboard].
 Pre-rendered STLs are available on [Printables - Cytron CM4 Maker Board][printables].
 
 This design is intended to be fully enclosed for dust ingress protection, and as
-such may lack adequate thermal disappation. There's an optional vent pattern
+such may lack adequate thermal dissipation. There's an optional vent pattern
 that can be turned on if you want to allow for airflow.
 
 Ingredients
